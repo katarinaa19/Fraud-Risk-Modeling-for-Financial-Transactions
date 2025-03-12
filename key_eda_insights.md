@@ -201,7 +201,6 @@ Based on the EDA, here are the key insights to guide our feature engineering pro
  - Create frequency encodings for card1-address combinations
  - Develop statistical aggregations of transaction amounts by card1 groupings
  - Generate time-delta features to capture quick usage patterns
-
 - For other card features:
  - Apply frequency encoding for card2 and card3
  - Use one-hot encoding for card4 and card6
