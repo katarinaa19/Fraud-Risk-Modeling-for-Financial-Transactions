@@ -28,13 +28,13 @@
 EDA insights guide the feature engineering and model selection, ensuring models align with business objectives and deliver improved forecasting accuracy.
 Here is the sample of EDA: https://github.com/katarinaa19/Fraud-Risk-Modeling-for-Financial-Transactions/blob/main/key_eda_insights.md
 Findings: 
-- Time-Based and Interaction Features: Create features to capture fraud patterns during low-activity periods; Develop rolling-window features for time-dependent fraud behaviors.
-- Amount-Related Features:  Generate interaction terms involving transaction amounts and categorical variables;  Create aggregations (mean, median, sum) over specified periods.
-- Product Category Features: Apply frequenct/target encoding and generate time-based features.
-- V Columns Strategy: Select representative V features based on EDA insights.
-- ID Columns Processing: Split into categorical and categorical subsets; then apply normalization and appropriate encoding.
-- Card Features Engineering: Create time-delta features, aggregations of transaction amounts and frequency encoding.
-- Unique User Identifier (Most Important): Construct a unique identifier by combining card number, address, and open account date.
+- **Time-Based and Interaction Features**: Create features to capture fraud patterns during low-activity periods; Develop rolling-window features for time-dependent fraud behaviors.
+- **Amount-Related Features**:  Generate interaction terms involving transaction amounts and categorical variables;  Create aggregations (mean, median, sum) over specified periods.
+- **Product Category Features**: Apply frequenct/target encoding and generate time-based features.
+- **V Columns Strategy**: Select representative V features based on EDA insights.
+- **ID Columns Processing**: Split into categorical and categorical subsets; then apply normalization and appropriate encoding.
+- **Card Features Engineering**: Create time-delta features, aggregations of transaction amounts and frequency encoding.
+- **Unique User Identifier (Most Important)**: Construct a unique identifier by combining card number, address, and open account date.
 
 
 ## Feature Engineering
