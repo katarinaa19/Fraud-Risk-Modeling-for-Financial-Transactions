@@ -2,16 +2,16 @@
 
 # 🌟 Overview  
 
-## **🎯Problem Statement and Objective**  
+## Problem Statement and Objective  
 
 
 
-## **📂Dataset**  
+## Dataset 
 - **Data Description**: 
 - **Key Features**  
 - **Source**: 
 
-## **🛠️ Process Overview**  
+## Process Overview 
 - I started with exploratory data analysis (EDA); the goal is to uncover masked features, anonymized for privacy, by classifying them into categorical and numerical types and inferring their meanings through distribution patterns. This provides essential insights for effective feature engineering.
 - I prioritize feature engineering since many raw features don't capture interactions crucial for fraud detection. I create a unique user identification number (UID) by combining the card number, address, and account details, enabling accurate user identification across multiple cards. This method assumes the card prefix, user address, and card usage duration accurately identify individual users, helping us analyze fraud patterns across multiple transactions. Then, I develop interaction features based on business understanding, such as tracking daily transactions per product to detect unusual spikes indicating fraud.
 - For modeling, I selected XGBoost as a baseline due to its capability to model nonlinear relationships, enhanced efficiency with LightGBM due to its histogram-based optimization, and leveraged CatBoost to handle categorical features without extensive preprocessing. These models do not rely on assumptions such as linearity, normality, or homoscedasticity, which makes them well-suited for our project.
