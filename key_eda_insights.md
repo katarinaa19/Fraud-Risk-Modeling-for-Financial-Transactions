@@ -1,6 +1,6 @@
-# Key EDA Insights
+# 💡 Key EDA Insights
 
-## Table of Contents
+**Table of Contents**
 - [Class Distribution](#class-distribution)
 - [Correlation Analysis](#correlation-analysis)
 - [Transaction Timedelta Analysis](#transaction-timedelta-analysis)
