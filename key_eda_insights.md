@@ -23,7 +23,7 @@ The dataset exhibits a strong class imbalance, with fraudulent transactions acco
 
 ## Correlation Analysis  
 
-The top 20 features most correlated with "isFraud" are `V` features, whose exact meanings are masked. Therefore, exploring their potential significance and understanding their relationship with fraudulent transactions is crucial for capturing fraud differentiation effectively.
+The top 20 features most correlated with "isFraud" are `V` features, whose exact meanings are masked. Therefore, exploring their potential significance and understanding their relationship with fraudulent transactions is crucial for capturing fraud differentiation effectively. We will analyze each `V` features one by one later.
 
 ![image](https://github.com/user-attachments/assets/4ff18f26-3465-409c-bd8b-c4b9f862ba61)
 
@@ -35,7 +35,9 @@ Fraudulent transactions may be more frequent on certain weekdays or time periods
 
 ### Mean Fraud Rate and Transaction Count by Date  
 
-Fraud rates fluctuate with sharp spikes, while transaction volume remains stable with periodic peaks. Higher fraud rates often align with lower transaction volume, suggesting fraudsters exploit low-activity periods. Incorporating interaction features with timedelta variables can help capture these time-dependent fraud patterns.
+- Fraud rates fluctuate with sharp spikes, while transaction volume remains stable with periodic peaks. 
+- Higher fraud rates often align with lower transaction volume, suggesting fraudsters exploit low-activity periods. 
+- Incorporating interaction features with timedelta variables can help capture these time-dependent fraud patterns.
 
 ![image](https://github.com/user-attachments/assets/77dd721f-61c8-479b-8166-1ec857d3cdd8)
 
@@ -52,11 +54,13 @@ Therefore, we might need to create time-based features in feature engineering pr
 
 ## Transaction Amount  
 
-The plots show that fraudulent transactions (isFraud=1, red) are concentrated at lower amounts, primarily below $1,000. Additionally, most transactions have small amounts clustered near zero, with a long tail extending beyond $30,000. This heavy-tailed distribution suggests that a log transformation would be beneficial for better fraud/non-fraud separation if we want to use linear-based models like logistic regression.
+- The plots show that fraudulent transactions (isFraud=1, red) are concentrated at lower amounts, primarily below $1,000. 
+- Additionally, most transactions have small amounts clustered near zero, with a long tail extending beyond $30,000. 
+- This heavy-tailed distribution suggests that a log transformation would be beneficial for better fraud/non-fraud separation if we want to use linear-based models like logistic regression.
 
 ![image](https://github.com/user-attachments/assets/1bf5b90f-e634-4274-8072-8398d6393d1b)
 
-Transaction amount after log transformation:
+- Transaction amount after log transformation:
 
 ![image](https://github.com/user-attachments/assets/a14e2615-cfd0-41a5-b39d-0a2995b0d829)
 
@@ -73,17 +77,17 @@ Transaction amount after log transformation:
 
 ### Time-Based Properties for Each Product Category  
 
-From the plots, we can see:
-1. Some categories, such as Product H & R, show sharp peaks in fraud at specific times (e.g., certain hours or days), which suggests that fraud is not evenly distributed across time.
-2. If fraud behavior is time-sensitive, we might need time-based features like DT_W, DT_M, or other rolling averages to capture this behavior.
+- From the plots, we can see:
+  1. Some categories, such as Product H & R, show sharp peaks in fraud at specific times (e.g., certain hours or days), which suggests that fraud is not evenly distributed across time.
+  2. If fraud behavior is time-sensitive, we might need time-based features like DT_W, DT_M, or other rolling averages to capture this behavior.
 
-Therefore, instead of using simple label encoding, which treats ProductCD as an ordinal variable, we need categorical encoding that captures:
-- Fraud trends per product over time (ProductCD_W_Day, ProductCD_C_Day, etc.).
-- Transaction count trends per product per day (to measure popularity or unusual spikes).
+- Therefore, instead of using simple label encoding, which treats ProductCD as an ordinal variable, we need categorical encoding that captures:
+  - Fraud trends per product over time (ProductCD_W_Day, ProductCD_C_Day, etc.).
+  - Transaction count trends per product per day (to measure popularity or unusual spikes).
 
-Why Not Use Simple Label Encoding?
-- Label Encoding assumes an ordinal relationship between categories, but ignore time-dependent properties.
-- One-Hot Encoding would create too many sparse features.
+- Why Not Use Simple Label Encoding?
+  - Label Encoding assumes an ordinal relationship between categories, but ignore time-dependent properties.
+  - One-Hot Encoding would create too many sparse features.
 
 ![image](https://github.com/user-attachments/assets/52881c6b-8587-46da-ba4e-6f8db4c57265)
 
@@ -91,9 +95,9 @@ Why Not Use Simple Label Encoding?
 
 ## V Column Analysis  
 
-With over 300 V features, many of which are correlated and contain NaNs, direct correlation analysis is challenging due to high dimensionality, excessive missing values, and categorical nature. To address this, we first group features with the same number of NaNs, then identify correlated sub-groups and select the most representative feature based on uniqueness and completeness. Features with more unique values are prioritized; if similar, the one with fewer NaNs is chosen, reducing redundancy while preserving fraud patterns.
+- With over 300 V features, many of which are correlated and contain NaNs, direct correlation analysis is challenging due to high dimensionality, excessive missing values, and categorical nature. To address this, we first group features with the same number of NaNs, then identify correlated sub-groups and select the most representative feature based on uniqueness and completeness. Features with more unique values are prioritized; if similar, the one with fewer NaNs is chosen, reducing redundancy while preserving fraud patterns.
 
-For example, in one such group, the selected features [1, 3, 4, 6, 8, 11] balance information retention and feature diversity. Correlated pairs like V2-V3, V4-V5, V6-V8, and V10-V11 were identified, with the most unique and complete feature retained from each pair. V1 was kept for independence, while V3, V4, and V6 were chosen for diversity. V11 was preferred over V10 due to near-identical correlation but better completeness. This approach optimizes feature selection, ensuring efficient modeling without excessive redundancy. For other V features, refer to the EDA and FE.ipynb
+- For example, in one such group, the selected features [1, 3, 4, 6, 8, 11] balance information retention and feature diversity. Correlated pairs like V2-V3, V4-V5, V6-V8, and V10-V11 were identified, with the most unique and complete feature retained from each pair. V1 was kept for independence, while V3, V4, and V6 were chosen for diversity. V11 was preferred over V10 due to near-identical correlation but better completeness. This approach optimizes feature selection, ensuring efficient modeling without excessive redundancy. For other V features, refer to the EDA and FE.ipynb
 
 ![image](https://github.com/user-attachments/assets/3453ce37-e443-4358-acc5-c396c393a9b8)
 
@@ -101,13 +105,15 @@ For example, in one such group, the selected features [1, 3, 4, 6, 8, 11] balanc
 
 ## ID Column Analysis  
 
-The id_ columns (id_01 to id_38) contain identity-related information derived primarily from device and network data. Since their exact meanings are masked, we analyze distribution plots to distinguish numerical and categorical features, helping determine which to encode and which to normalize.
+- The id_ columns (id_01 to id_38) contain identity-related information derived primarily from device and network data. Since their exact meanings are masked, we analyze distribution plots to distinguish numerical and categorical features, helping determine which to encode and which to normalize.
 
-Here are the numerical features: ["id_01", "id_02", "id_03", "id_04", "id_05", "id_06", "id_07", "id_08", "id_09", "id_10", "id_11", "id_13", "id_17", "id_18", "id_19", "id_20", "id_21", "id_22", "id_24", "id_25", "id_26", "id_32"]. id_01 to id_11 might represent various risk scores or signals associated with the transaction or the user's behavior.
+- Here are the numerical features: ["id_01", "id_02", "id_03", "id_04", "id_05", "id_06", "id_07", "id_08", "id_09", "id_10", "id_11", "id_13", "id_17", "id_18", "id_19", "id_20", "id_21", "id_22", "id_24", "id_25", "id_26", "id_32"].
+- id_01 to id_11 might represent various risk scores or signals associated with the transaction or the user's behavior.
 
 ![image](https://github.com/user-attachments/assets/5f482f9e-b304-4cf0-ad11-1508aca1a1ac)
 
-Here are the numerical features: ["id_12", "id_15", "id_16", "id_23", "id_27", "id_28","id_29", "id_30", "id_31", "id_33", "id_34"]. Now we can pinpoint meanings of some features; For example, id_30 represents Operating System (OS); id_31 is browser type; id_32 is screen resolution, etc.
+- Here are the numerical features: ["id_12", "id_15", "id_16", "id_23", "id_27", "id_28","id_29", "id_30", "id_31", "id_33", "id_34"].
+- Now we can pinpoint meanings of some features; For example, id_30 represents Operating System (OS); id_31 is browser type; id_32 is screen resolution, etc.
 
 ![image](https://github.com/user-attachments/assets/ca5ad76d-0e4e-41a5-bc40-51cb9c8d107e)
 
@@ -115,7 +121,8 @@ Here are the numerical features: ["id_12", "id_15", "id_16", "id_23", "id_27", "
 
 ## Card Column Analysis  
 
-`card1` to `card6` are related to the payment card used in the transaction. While their exact meanings are masked, they are likely associated with the card type, issuer, and transaction patterns. We identify categorical and numerical columns based on their unique values and histograms.
+- `card1` to `card6` are related to the payment card used in the transaction. While their exact meanings are masked, they are likely associated with the card type, issuer, and transaction patterns. 
+- We identify categorical and numerical columns based on their unique values and histograms.
 
 | Card Feature | Unique Values |
 |-------------|--------------|
