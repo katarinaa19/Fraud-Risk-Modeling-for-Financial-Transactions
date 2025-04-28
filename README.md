@@ -2,21 +2,29 @@
 
 # 🌟 Overview  
 
-## Problem Statement and Objective  
-
-
-
-## Dataset 
-- **Data Description**: 
-- **Key Features**  
-- **Source**: 
-
+## Objective  
+The main goal is to identify whether each transaction is fraudulent. Among them, the training set sample is about 590,000 (3.5% of fraud), and the test set sample is about 500,000.
+The data is mainly divided into 2 categories which are joined by TransactionID. Not all transactions have corresponding identity information.
+- transaction data
+- identity data.
+  
 ## Process Overview 
-- I started with exploratory data analysis (EDA); the goal is to uncover masked features, anonymized for privacy, by classifying them into categorical and numerical types and inferring their meanings through distribution patterns. This provides essential insights for effective feature engineering.
-- I prioritize feature engineering since many raw features don't capture interactions crucial for fraud detection. I create a unique user identification number (UID) by combining the card number, address, and account details, enabling accurate user identification across multiple cards. This method assumes the card prefix, user address, and card usage duration accurately identify individual users, helping us analyze fraud patterns across multiple transactions. Then, I develop interaction features based on business understanding, such as tracking daily transactions per product to detect unusual spikes indicating fraud.
-- For modeling, I selected XGBoost as a baseline due to its capability to model nonlinear relationships, enhanced efficiency with LightGBM due to its histogram-based optimization, and leveraged CatBoost to handle categorical features without extensive preprocessing. These models do not rely on assumptions such as linearity, normality, or homoscedasticity, which makes them well-suited for our project.
-- Hyperparameters were tuned using Bayesian Optimization for its efficiency and probabilistic guidance. To avoid information leakage and overfitting, I implemented group k-fold cross-validation, ensuring user data doesn't overlap between training and testing sets.
-- Finally, I used Accuracy, Precision, F1 Score, and AUC to evaluate the model. Accuracy provides an overall performance measure, while Precision reduces false positives. F1 Score balances precision and recall, and AUC assesses the model's ability to distinguish fraudulent transactions, ensuring effective fraud detection.
+- I started with exploratory data analysis (EDA), aiming to uncover the true nature of masked features that had been anonymized for privacy reasons. I classified features into categorical and numerical types and inferred their meanings based on distribution patterns, laying the foundation for effective feature engineering.
+
+- Feature engineering was a priority, as many raw features lacked interactions critical for fraud detection. I created a unique user identification number (UID) by combining card number, address, and account information. This approach assumes that card prefixes, addresses, and account longevity can reliably identify individual users, enabling more accurate fraud pattern detection across transactions. Based on business understanding, I also engineered interaction features, such as daily transaction counts per product, to capture abnormal spikes that may indicate fraudulent behavior.
+
+
+- For modeling, I initially selected XGBoost as a baseline because of its strong performance on large, high-dimensional, and sparse datasets. However, the initial results were not satisfactory, prompting a second round of focused feature engineering.
+  - The primary goal of this feature engineering phase was to shift the prediction target from individual transactions to identifying potentially fraudulent users. By predicting at the user level rather than the transaction level, the model can more efficiently and reliably detect all related fraudulent activities associated with the same user.
+  - To achieve this, I engineered a rich set of time-based, product-based, and user-based interaction features designed to capture subtle anomalies in credit card activity patterns. For example, I tracked the number and amount of transactions per user over different time windows, created features representing the diversity of products purchased, and monitored transaction behaviors across days and hours. A typical fraud pattern — small frequent charges escalating into large withdrawals — was modeled through features like cumulative spend per user, transaction count acceleration, and spending volatility.
+  - By embedding these multi-dimensional interaction patterns, the model gained the ability to recognize complex user behaviors that precede large-scale fraud, leading to significantly better generalization and earlier fraud detection.
+- In terms of Model development Given the dataset contained over 250 categorical features, I leveraged CatBoost for its ability to handle categorical data without extensive preprocessing. To efficiently handle the large dataset size, I also used LightGBM, which applies a histogram-based algorithm and a leaf-wise tree growth strategy, resulting in faster training and lower memory usage without sacrificing accuracy.
+
+- In terms of model development, given the dataset contained over 250 categorical features, I leveraged CatBoost for its ability to handle categorical variables directly without extensive preprocessing, preserving category information while simplifying the pipeline. Also, to efficiently handle the large dataset size, I also applied LightGBM, which uses a histogram-based algorithm and a leaf-wise tree growth strategy. This allowed for faster training, lower memory consumption, and no compromise in predictive performance.
+
+- Hyperparameter tuning was performed using Bayesian Optimization for its efficient exploration of the parameter space and probabilistic modeling. To prevent information leakage and overfitting, I implemented Group K-Fold Cross-Validation, using the UID (user ID) as the group key to ensure the same user did not appear across both training and validation sets simultaneously.
+  
+- Finally, model evaluation was conducted using multiple metrics: Accuracy (overall performance), Precision (minimizing false positives), F1 Score (balancing precision and recall), and AUC (assessing the model's ability to distinguish fraudulent transactions). This multi-metric approach ensures a robust and reliable fraud detection system.
 
 
 ---
@@ -76,28 +84,11 @@ Findings:
 
 ---
 
-## 🔍 Implementation Steps  
-1️⃣ **Data Collection & Preprocessing** – Cleaning and structuring the dataset for analysis.  
-2️⃣ **Exploratory Data Analysis (EDA)** – Identifying seasonal patterns and trends.  
-3️⃣ **Feature Engineering** – Creating meaningful variables to improve model accuracy.  
-4️⃣ **Model Selection & Training** – Testing various forecasting models.  
-5️⃣ **Evaluation & Optimization** – Measuring accuracy and fine-tuning the best-performing model.  
-6️⃣ **Deployment & Insights** – Providing actionable insights for Walmart’s decision-makers.  
+##  Model Results
+| Model     | Public Score | Private Score | Cross-Validation AUC | 
+|-----------|--------------|---------------|----------------------|
+| CatBoost  | 0.94         | 0.92          | 0.8942                 | 
+| LightGBM  | 0.93         | 0.91          | 0.88                    | 
+| XGBoost   | 0.91         | 0.88          | 0.8822                 | 
 
----
-
-## 🎯 Expected Outcomes  
-✅ **Accurate sales predictions** to enhance decision-making.  
-✅ **Optimized stock levels** to minimize excess inventory costs.  
-✅ **Improved revenue forecasting** for financial planning.  
-✅ **Strategic business insights** for Walmart’s leadership team.  
-
----
-
-## 🚀 Future Enhancements  
-🚀 Expand the model to include **other product categories**.  
-📊 Integrate **macroeconomic factors and competitor pricing** into predictions.  
-⚡ Automate the forecasting process with **real-time data updates**.  
-
----
 
