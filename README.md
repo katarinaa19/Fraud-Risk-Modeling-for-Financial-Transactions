@@ -23,7 +23,7 @@ The data is mainly divided into 2 categories which are joined by TransactionID. 
 
 - Hyperparameter tuning was performed using Bayesian Optimization for its efficient exploration of the parameter space and probabilistic modeling. To prevent information leakage and overfitting, I implemented Group K-Fold Cross-Validation, using the UID (user ID) as the group key to ensure the same user did not appear across both training and validation sets simultaneously.
   
-- Finally, model evaluation was conducted using multiple metrics: Accuracy (overall performance), Precision (minimizing false positives), F1 Score (balancing precision and recall), and AUC (assessing the model's ability to distinguish fraudulent transactions). This multi-metric approach ensures a robust and reliable fraud detection system.
+- Finally, model evaluation was conducted using multiple metrics: Precision (minimizing false positives), F1 Score (balancing precision and recall), and AUC (assessing the model's ability to distinguish fraudulent transactions). This multi-metric approach ensures a robust and reliable fraud detection system.
 
 
 ---
