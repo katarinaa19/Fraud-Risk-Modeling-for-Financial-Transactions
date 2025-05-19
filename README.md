@@ -86,8 +86,8 @@ Findings:
 ##  Model Results
 | Model     | Public Score | Private Score | Cross-Validation AUC | 
 |-----------|--------------|---------------|----------------------|
-| CatBoost  | 0.94         | 0.92          | 0.8942                 | 
-| LightGBM  | 0.93         | 0.91          | 0.88                    | 
+| CatBoost  | 0.94         | 0.92          | 0.97                 | 
+| LightGBM  | 0.93         | 0.91          | 0.96                    | 
 | XGBoost   | 0.91         | 0.88          | 0.8822                 | 
 
 
